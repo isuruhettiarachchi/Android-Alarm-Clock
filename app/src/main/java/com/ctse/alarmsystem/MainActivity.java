@@ -44,10 +44,14 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         setRingtoneButton = findViewById(R.id.setRingtoneButton);
         alarmSwitch = findViewById(R.id.alarmSwitch);
 
+        ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+
         calendar = Calendar.getInstance();
 
         alarmIntent = new Intent(this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+
+        setRingtone(ringtoneUri);
 
         addAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,12 +110,14 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 ringtoneUri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                Ringtone ringtone = RingtoneManager.getRingtone(this, ringtoneUri);
-                String ringtoneName = ringtone.getTitle(this);
-                setRingtoneButton.setText(ringtoneName);
-                Log.i("ringone", ringtoneUri.toString());
-                Log.i("ringtone name", ringtoneName);
+                setRingtone(ringtoneUri);
             }
         }
+    }
+
+    public void setRingtone(Uri ringtoneUri) {
+        Ringtone ringtone = RingtoneManager.getRingtone(this, ringtoneUri);
+        String ringtoneName = ringtone.getTitle(this);
+        setRingtoneButton.setText(ringtoneName);
     }
 }
