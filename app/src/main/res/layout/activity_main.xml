@@ -32,9 +32,20 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/alarmTimeTextView"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="14dp"
             android:text="Button" />
+
+        <Switch
+            android:id="@+id/alarmSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="247dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="25dp"
+            android:layout_toEndOf="@+id/alarmTimeTextView" />
 
     </RelativeLayout>
 
