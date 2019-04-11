@@ -49,9 +49,12 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         calendar = Calendar.getInstance();
 
         alarmIntent = new Intent(this, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+
+//        pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
 
         setRingtone(ringtoneUri);
+
+        createPendingIntent();
 
         addAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
 
                 if (isChecked) {
                     Log.i("time in millis", String.valueOf(calendar.getTimeInMillis()));
@@ -119,5 +123,16 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         Ringtone ringtone = RingtoneManager.getRingtone(this, ringtoneUri);
         String ringtoneName = ringtone.getTitle(this);
         setRingtoneButton.setText(ringtoneName);
+
+        System.out.println("select ringtone: " + ringtoneUri);
+        Log.i("select ringtone", ringtoneUri.toString());
+
+        alarmIntent.putExtra("ringtone", ringtoneUri.toString());
+
+        createPendingIntent();
+    }
+
+    public void createPendingIntent() {
+        pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
     }
 }

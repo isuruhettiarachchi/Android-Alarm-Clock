@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Alarm System</string>
+    <string name="question_title">Please select the correct answer to dismiss the alarm</string>
 </resources>
