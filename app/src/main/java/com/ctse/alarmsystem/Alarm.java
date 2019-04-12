@@ -7,13 +7,15 @@ public class Alarm {
     private long alarmTime;
     private boolean alarmStatus;
     private Uri ringtoneUri;
+    private String label;
 
     public Alarm() {}
 
-    public Alarm(long alarmTime, boolean alarmStatus, Uri ringtoneUri) {
+    public Alarm(long alarmTime, boolean alarmStatus, Uri ringtoneUri, String label) {
         this.alarmTime = alarmTime;
         this.alarmStatus = alarmStatus;
         this.ringtoneUri = ringtoneUri;
+        this.label = label;
     }
 
     public long getAlarmTime() {
@@ -38,5 +40,13 @@ public class Alarm {
 
     public void setRingtoneUri(Uri ringtoneUri) {
         this.ringtoneUri = ringtoneUri;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

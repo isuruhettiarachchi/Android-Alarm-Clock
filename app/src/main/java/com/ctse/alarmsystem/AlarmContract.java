@@ -12,6 +12,7 @@ public final class AlarmContract {
         public static final String COLUMN_ALARM_TIME = "alarmtime";
         public static final String COLUMN_ALARM_STATUS = "alarmstatus";
         public static final String COLUMN_RINGTONE = "ringtone";
+        public static final String COLUMN_LABEL = "label";
     }
 
 }
