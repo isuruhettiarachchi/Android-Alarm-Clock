@@ -21,7 +21,7 @@ public class AlarmFiredActivity extends AppCompatActivity {
     private RadioButton rb4;
     private Button buttonConfirm;
 
-    private QuizDbHelper dbHelper;
+    private AlarmDbHelper dbHelper;
     private Question question;
 
     @Override
@@ -56,7 +56,7 @@ public class AlarmFiredActivity extends AppCompatActivity {
         rb4 = findViewById(R.id.radio_button4);
         buttonConfirm = findViewById(R.id.button_confirm);
 
-        dbHelper = new QuizDbHelper(this);
+        dbHelper = new AlarmDbHelper(this);
 
         setQuestionDetails();
 
