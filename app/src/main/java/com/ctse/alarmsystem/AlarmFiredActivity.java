@@ -1,5 +1,7 @@
 package com.ctse.alarmsystem;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -41,12 +43,25 @@ public class AlarmFiredActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
 
-//        String ringtone = getIntent().getExtras().getString("ringtone");
-//
-//        Uri ringtoneUri = Uri.parse(ringtone);
-//
-//        MediaPlayer mediaPlayer = MediaPlayer.create(this, ringtoneUri);
-//        mediaPlayer.start();
+        String ringtone = getIntent().getExtras().getString("ringtone");
+
+        Log.d("fired", ringtone);
+
+        Uri ringtoneUri = Uri.parse(ringtone);
+
+        try {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.setDataSource(this, ringtoneUri);
+            final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+                mediaPlayer.setLooping(true);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+            }
+        } catch (Exception e) {
+            Log.e("media exception", e.toString());
+        }
 
         textViewQuestion = findViewById(R.id.text_view_question);
         rbGroup = findViewById(R.id.radio_group);

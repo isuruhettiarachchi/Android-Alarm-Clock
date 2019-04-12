@@ -10,7 +10,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String ringtone = intent.getStringExtra("ringtone");
+        String ringtone = intent.getStringExtra("ringtoneUri");
+
+        Log.d("ringtone", ringtone);
 
         Toast.makeText(context, "Alarm fired", Toast.LENGTH_LONG).show();
         System.out.println("Alarm Fired");

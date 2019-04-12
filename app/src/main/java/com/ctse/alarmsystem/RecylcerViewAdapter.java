@@ -1,14 +1,19 @@
 package com.ctse.alarmsystem;
 
+import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -16,6 +21,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class RecylcerViewAdapter extends RecyclerView.Adapter<RecylcerViewAdapter.ViewHolder> {
+
+    private static final int RINGTONE_REQUEST_CODE = 1;
+
+    AlarmManager alarmManager;
 
     private ArrayList<String> mAlarmTimes = new ArrayList<>();
     private ArrayList<Long> mAlarmTimesInMillis = new ArrayList<>();
@@ -54,6 +63,8 @@ public class RecylcerViewAdapter extends RecyclerView.Adapter<RecylcerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        final int poisition = i;
+
         viewHolder.alarmTime.setText(mAlarmTimes.get(i));
         viewHolder.alarmSwitch.setChecked(mAlarmStatuses.get(i));
         viewHolder.alarmLabel.setText(mLabels.get(i));
@@ -62,6 +73,16 @@ public class RecylcerViewAdapter extends RecyclerView.Adapter<RecylcerViewAdapte
         long timeInMillis = mAlarmTimesInMillis.get(i);
         Uri ringtoneUri = Uri.parse(mRingtoneUris.get(i));
         int flag = mFlags.get(i);
+
+        viewHolder.ringtoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
+                intent.putExtra("position", poisition);
+                ((Activity) mContext).startActivityForResult(intent, RINGTONE_REQUEST_CODE);
+            }
+        }); // TODO: Pass position and set ringtone
 
         /*TODO: get time form timepicker
         * TODO: get ringtone
@@ -74,12 +95,9 @@ public class RecylcerViewAdapter extends RecyclerView.Adapter<RecylcerViewAdapte
     }
 
     public  void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == -1) {
-            if (requestCode == 1) {
-
-            }
-        }
+        Log.d("MyAdapter", "onActivityResult");
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
