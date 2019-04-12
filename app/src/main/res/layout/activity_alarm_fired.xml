@@ -7,11 +7,14 @@
     tools:context=".AlarmFiredActivity">
 
     <TextView
-        android:id="@+id/text_view_guide"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        tools:text="@string/question_title" />
+        android:layout_above="@id/text_view_question"
+        android:layout_marginBottom="16dp"
+        android:text="@string/question_title"
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
+
 
     <TextView
         android:id="@+id/text_view_question"
