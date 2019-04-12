@@ -4,26 +4,46 @@ import android.net.Uri;
 
 public class Alarm {
 
-    private long alarmTime;
+    private String alarmTime;
+    private long alarmTimeInMillis;
     private boolean alarmStatus;
+    private String ringtoneName;
     private Uri ringtoneUri;
     private String label;
+    private int flag;
 
     public Alarm() {}
 
-    public Alarm(long alarmTime, boolean alarmStatus, Uri ringtoneUri, String label) {
+    public Alarm(String alarmTime,
+                 long alarmTimeInMillis,
+                 boolean alarmStatus,
+                 String ringtoneName,
+                 Uri ringtoneUri,
+                 String label,
+                 int flag) {
         this.alarmTime = alarmTime;
+        this.alarmTimeInMillis = alarmTimeInMillis;
         this.alarmStatus = alarmStatus;
+        this.ringtoneName = ringtoneName;
         this.ringtoneUri = ringtoneUri;
         this.label = label;
+        this.flag = flag;
     }
 
-    public long getAlarmTime() {
+    public String getAlarmTime() {
         return alarmTime;
     }
 
-    public void setAlarmTime(long alarmTime) {
+    public void setAlarmTime(String alarmTime) {
         this.alarmTime = alarmTime;
+    }
+
+    public long getAlarmTimeInMillis() {
+        return alarmTimeInMillis;
+    }
+
+    public void setAlarmTimeInMillis(long alarmTimeInMillis) {
+        this.alarmTimeInMillis = alarmTimeInMillis;
     }
 
     public boolean isAlarmStatus() {
@@ -32,6 +52,14 @@ public class Alarm {
 
     public void setAlarmStatus(boolean alarmStatus) {
         this.alarmStatus = alarmStatus;
+    }
+
+    public String getRingtoneName() {
+        return ringtoneName;
+    }
+
+    public void setRingtoneName(String ringtoneName) {
+        this.ringtoneName = ringtoneName;
     }
 
     public Uri getRingtoneUri() {
@@ -48,5 +76,13 @@ public class Alarm {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }
