@@ -1,8 +1,8 @@
 package com.ctse.alarmsystem;
 
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,14 +13,11 @@ import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton addAlarmButton;
-
-    private Uri ringtoneUri;
 
     private AlarmDbHelper dbHelper;
     private Alarm alarm;
@@ -42,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbHelper = new AlarmDbHelper(this);
+        dbHelper = AlarmDbHelper.getInstance(this);
         alarm = new Alarm();
 
         getAlarms();
@@ -139,4 +136,18 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    public void deleteAlarm(String timeInMillis, int posision) {
+        Log.d("main", "before if");
+        if (dbHelper.deleteAlarm(timeInMillis)) {
+            Log.d("main", "row deleted");
+            getAlarms();
+        }
+    }
+
+//    public void cancelAlarm(int flag) {
+//        Intent alarmIntent = new Intent(SetAlarmActivity.this, AlarmReceiver.class);
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.cancel();
+//    }
 }

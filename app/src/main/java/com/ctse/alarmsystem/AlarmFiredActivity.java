@@ -26,6 +26,8 @@ public class AlarmFiredActivity extends AppCompatActivity {
     private AlarmDbHelper dbHelper;
     private Question question;
 
+//    private AlarmDbHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,11 @@ public class AlarmFiredActivity extends AppCompatActivity {
                         // Hide the nav bar and status bar
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
+
+        String alarmTime = getIntent().getExtras().getString("alarmTime");
+        dbHelper = AlarmDbHelper.getInstance(this);
+
+//        dbHelper.updateAlarmStatus(alarmTime);
 
         String ringtone = getIntent().getExtras().getString("ringtone");
 
@@ -70,8 +77,6 @@ public class AlarmFiredActivity extends AppCompatActivity {
         rb3 = findViewById(R.id.radio_button3);
         rb4 = findViewById(R.id.radio_button4);
         buttonConfirm = findViewById(R.id.button_confirm);
-
-        dbHelper = new AlarmDbHelper(this);
 
         setQuestionDetails();
 

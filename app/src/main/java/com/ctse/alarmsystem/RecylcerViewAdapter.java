@@ -62,7 +62,7 @@ public class RecylcerViewAdapter extends RecyclerView.Adapter<RecylcerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final int poisition = i;
 
         viewHolder.alarmTime.setText(mAlarmTimes.get(i));
@@ -70,19 +70,20 @@ public class RecylcerViewAdapter extends RecyclerView.Adapter<RecylcerViewAdapte
         viewHolder.alarmLabel.setText(mLabels.get(i));
         viewHolder.ringtoneButton.setText(mRingtoneNames.get(i));
 
-        long timeInMillis = mAlarmTimesInMillis.get(i);
+        final long timeInMillis = mAlarmTimesInMillis.get(i);
         Uri ringtoneUri = Uri.parse(mRingtoneUris.get(i));
         int flag = mFlags.get(i);
 
-        viewHolder.ringtoneButton.setOnClickListener(new View.OnClickListener() {
+        viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
-                intent.putExtra("position", poisition);
-                ((Activity) mContext).startActivityForResult(intent, RINGTONE_REQUEST_CODE);
+
+                if (mContext instanceof MainActivity) {
+                    Log.d("delete", "delete button clicked");
+                    ((MainActivity)mContext).deleteAlarm(mAlarmTimes.get(poisition), poisition);
+                }
             }
-        }); // TODO: Pass position and set ringtone
+        });
 
         /*TODO: get time form timepicker
         * TODO: get ringtone

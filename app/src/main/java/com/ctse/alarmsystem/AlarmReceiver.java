@@ -11,6 +11,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         String ringtone = intent.getStringExtra("ringtoneUri");
+        String alarmTime = intent.getStringExtra("alarmTime");
 
         Log.d("ringtone", ringtone);
 
@@ -22,6 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         alarmFiredIntent.putExtra("lock", true);
         alarmFiredIntent.putExtra("ringtone", ringtone);
+        alarmFiredIntent.putExtra("alarmTime", alarmTime);
 
         alarmFiredIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

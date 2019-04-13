@@ -6,20 +6,39 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmDbHelper extends SQLiteOpenHelper {
+    private static AlarmDbHelper mInstance = null;
 
     public static final String DATABASE_NAME = "alarm.db";
     public static final int DATABASE_VERSION = 1;
 
+    private Context mCtx;
+
     private SQLiteDatabase db;
 
-    public AlarmDbHelper(Context context) {
+    private AlarmDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.mCtx = context;
     }
+
+    public static AlarmDbHelper getInstance(Context ctx) {
+        /**
+         * use the application context as suggested by CommonsWare.
+         * this will ensure that you dont accidentally leak an Activitys
+         * context (see this article for more information:
+         * http://android-developers.blogspot.nl/2009/01/avoiding-memory-leaks.html)
+         */
+        if (mInstance == null) {
+            mInstance = new AlarmDbHelper(ctx.getApplicationContext());
+        }
+        return mInstance;
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -141,6 +160,16 @@ public class AlarmDbHelper extends SQLiteOpenHelper {
         db.update(AlarmContract.AlarmTable.TABLE_NAME, cv, where, whereAgs);
     }
 
+    public void updateAlarmStatus(String alarmTime) {
+        ContentValues cv = new ContentValues();
+        cv.put(AlarmContract.AlarmTable.COLUMN_ALARM_STATUS, 0);
+
+        String where = AlarmContract.AlarmTable.COLUMN_ALARM_TIME + " = ?";
+        String[] whereAgs = new String[] {alarmTime};
+
+        db.update(AlarmContract.AlarmTable.TABLE_NAME, cv, where, whereAgs);
+    }
+
     public List<Alarm> getAllAlarms() {
         List<Alarm> alarmList = new ArrayList<>();
 
@@ -167,6 +196,16 @@ public class AlarmDbHelper extends SQLiteOpenHelper {
         c.close();
 
         return alarmList;
+    }
+
+    public boolean deleteAlarm(String alarmTime) {
+        Log.d("dbhelper", "delete method");
+
+        String value = String.valueOf(alarmTime);
+        String where = AlarmContract.AlarmTable.COLUMN_ALARM_TIME + " = ?";
+        String[] whereAgs = new String[] {alarmTime};
+
+        return db.delete(AlarmContract.AlarmTable.TABLE_NAME, where, whereAgs) > 0;
     }
 
 

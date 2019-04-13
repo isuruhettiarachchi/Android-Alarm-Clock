@@ -109,6 +109,8 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
+
+        alarmIntent.putExtra("alarmTime", textViewTimePicker.getText());
     }
 
     @Override

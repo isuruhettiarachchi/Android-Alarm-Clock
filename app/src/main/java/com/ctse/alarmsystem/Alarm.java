@@ -4,6 +4,7 @@ import android.net.Uri;
 
 public class Alarm {
 
+    private int _id;
     private String alarmTime;
     private long alarmTimeInMillis;
     private boolean alarmStatus;
@@ -14,13 +15,15 @@ public class Alarm {
 
     public Alarm() {}
 
-    public Alarm(String alarmTime,
+    public Alarm(int _id,
+                 String alarmTime,
                  long alarmTimeInMillis,
                  boolean alarmStatus,
                  String ringtoneName,
                  Uri ringtoneUri,
                  String label,
                  int flag) {
+        this._id = _id;
         this.alarmTime = alarmTime;
         this.alarmTimeInMillis = alarmTimeInMillis;
         this.alarmStatus = alarmStatus;
@@ -28,6 +31,14 @@ public class Alarm {
         this.ringtoneUri = ringtoneUri;
         this.label = label;
         this.flag = flag;
+    }
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
     public String getAlarmTime() {
