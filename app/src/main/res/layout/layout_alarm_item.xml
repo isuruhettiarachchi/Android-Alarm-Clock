@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="4dp"
-    android:id="@+id/layout_parent" >
+    android:id="@+id/layout_parent"
+    android:background="@color/colorShade">
 
     <TextView
         android:id="@+id/text_view_alarm_time"

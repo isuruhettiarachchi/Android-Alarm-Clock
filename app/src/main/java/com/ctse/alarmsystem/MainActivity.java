@@ -1,6 +1,7 @@
 package com.ctse.alarmsystem;
 
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecylcerViewAdapter adapter;
 
+    private Intent alarmIntent;
+
     private static final int SET_ALARM_INTENET_REQUEST_CODE = 1;
 
     @Override
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         alarm = new Alarm();
 
         getAlarms();
+
+        alarmIntent = new Intent(this, AlarmReceiver.class);
 
         addAlarmButton = findViewById(R.id.addAlarmButton);
 
@@ -137,17 +142,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void deleteAlarm(String timeInMillis, int posision) {
+    public void deleteAlarm(String timeInMillis, int position) {
         Log.d("main", "before if");
         if (dbHelper.deleteAlarm(timeInMillis)) {
             Log.d("main", "row deleted");
+            cancelAlarm(mFlags.get(position));
             getAlarms();
         }
     }
 
-//    public void cancelAlarm(int flag) {
-//        Intent alarmIntent = new Intent(SetAlarmActivity.this, AlarmReceiver.class);
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//        alarmManager.cancel();
-//    }
+    public void cancelAlarm(int flag) {
+
+    }
 }

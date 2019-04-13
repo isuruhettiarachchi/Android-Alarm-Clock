@@ -118,6 +118,8 @@ public class RecylcerViewAdapter extends RecyclerView.Adapter<RecylcerViewAdapte
             alarmLabel = itemView.findViewById(R.id.text_view_label);
             alarmSwitch = itemView.findViewById(R.id.switch_alarm);
             parentLayout = itemView.findViewById(R.id.layout_parent);
+
+            ringtoneButton.setEnabled(false);
         }
     }
 }
