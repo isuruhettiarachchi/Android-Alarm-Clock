@@ -18,11 +18,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    // variable declarations
     private FloatingActionButton addAlarmButton;
 
     private AlarmDbHelper dbHelper;
     private Alarm alarm;
 
+    // list to save database alarm data
     private ArrayList<String> mAlarmTimes = new ArrayList<>();
     private ArrayList<Long> mAlarmTimesInMillis = new ArrayList<>();
     private ArrayList<Boolean> mAlarmStatuses = new ArrayList<>();
@@ -42,15 +44,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // database helper
         dbHelper = AlarmDbHelper.getInstance(this);
         alarm = new Alarm();
 
+        // get all alarms from db
         getAlarms();
 
+        // intent to pass to broadcast receiver
         alarmIntent = new Intent(this, AlarmReceiver.class);
 
         addAlarmButton = findViewById(R.id.addAlarmButton);
 
+        // add new alarm
         addAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // get result from new alarm activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         adapter.onActivityResult(requestCode, resultCode, data);
@@ -80,12 +87,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("intent result", ringtoneName);
                 Log.d("intent result", String.valueOf(flag));
 
+                // create alarm
                 setAlarm(time, millis, label,ringtoneUri,ringtoneName, flag);
 
             }
         }
     }
 
+
+    // create new alarm
     private void setAlarm(String time, long timeInMillis, String label, String ringtoneUri, String ringtoneName, int flag) {
         alarm.setAlarmTime(time);
         alarm.setAlarmTimeInMillis(timeInMillis);
@@ -99,10 +109,13 @@ public class MainActivity extends AppCompatActivity {
         getAlarms();
     }
 
+
+    // save new alarm to db
     public void saveAlarm() {
         dbHelper.addAlarm(alarm);
     }
 
+    // get all alarms
     public void getAlarms() {
         List<Alarm> alarmList = dbHelper.getAllAlarms();
 
@@ -127,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
+    // initialize recycler view
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         adapter = new RecylcerViewAdapter(mAlarmTimes,
@@ -142,16 +156,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    // delete alarm
     public void deleteAlarm(String timeInMillis, int position) {
         Log.d("main", "before if");
         if (dbHelper.deleteAlarm(timeInMillis)) {
             Log.d("main", "row deleted");
-            cancelAlarm(mFlags.get(position));
+//            cancelAlarm(mFlags.get(position));
             getAlarms();
         }
     }
 
-    public void cancelAlarm(int flag) {
-
-    }
+//    public void cancelAlarm(int flag) {
+//
+//    }
 }

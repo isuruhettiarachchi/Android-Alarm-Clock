@@ -26,6 +26,7 @@ public class RecylcerViewAdapter extends RecyclerView.Adapter<RecylcerViewAdapte
 
     AlarmManager alarmManager;
 
+    // lists to keep alarm details
     private ArrayList<String> mAlarmTimes = new ArrayList<>();
     private ArrayList<Long> mAlarmTimesInMillis = new ArrayList<>();
     private ArrayList<Boolean> mAlarmStatuses = new ArrayList<>();

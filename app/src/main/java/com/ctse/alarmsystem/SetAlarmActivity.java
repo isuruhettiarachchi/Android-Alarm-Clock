@@ -24,6 +24,7 @@ import java.util.Calendar;
 
 public class SetAlarmActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
+    // declare variables
     private TextView textViewTimePicker;
     private Button ringtonePickerButton;
     private EditText label;
@@ -44,6 +45,7 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_alarm);
 
+        // initialize variables
         textViewTimePicker = findViewById(R.id.text_view_time_picker);
         ringtonePickerButton = findViewById(R.id.button_rigtone_picker);
         label = findViewById(R.id.textbox_label);
@@ -59,6 +61,7 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
         ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         setRingtone(ringtoneUri);
 
+        // time picker
         textViewTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +70,7 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
             }
         });
 
+        // ringtone picker
         ringtonePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +80,8 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
             }
         });
 
+
+        // set alarm
         setAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +89,7 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
                 String time = (String) textViewTimePicker.getText();
                 String labelText = label.getText().toString();
 
+                // alarm manager
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
@@ -102,6 +109,7 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
         });
     }
 
+    // time set callback
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         textViewTimePicker.setText(hourOfDay + ":" + minute);
@@ -113,6 +121,7 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
         alarmIntent.putExtra("alarmTime", textViewTimePicker.getText());
     }
 
+    // result from activity for ringtone picker
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK) {
@@ -123,6 +132,7 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
         }
     }
 
+    // set ringtone
     private void setRingtone(Uri uri) {
         Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
         ringtoneName = ringtone.getTitle(this);
@@ -134,19 +144,20 @@ public class SetAlarmActivity extends AppCompatActivity implements TimePickerDia
         setPendingIntent();
     }
 
+    // create pending intent
     private void setPendingIntent() {
         final int _id = (int) calendar.getTimeInMillis();
         pendingIntent = PendingIntent.getBroadcast(this, _id, alarmIntent, 0);
     }
 
-    public void cancelAlarm(int flag) {
-        alarmIntent = new Intent(this, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, flag, alarmIntent, 0);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
-
-        finish();
-    }
+//    public void cancelAlarm(int flag) {
+//        alarmIntent = new Intent(this, AlarmReceiver.class);
+//        pendingIntent = PendingIntent.getBroadcast(this, flag, alarmIntent, 0);
+//
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.cancel(pendingIntent);
+//
+//        finish();
+//    }
 
 }
