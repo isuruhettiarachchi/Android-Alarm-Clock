@@ -26,6 +26,7 @@ public class AlarmFiredActivity extends AppCompatActivity {
     private AlarmDbHelper dbHelper;
     private Question question;
 
+    MediaPlayer mediaPlayer;
 //    private AlarmDbHelper dbHelper;
 
     @Override
@@ -56,8 +57,8 @@ public class AlarmFiredActivity extends AppCompatActivity {
 
         Uri ringtoneUri = Uri.parse(ringtone);
 
+        mediaPlayer = new MediaPlayer();
         try {
-            MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(this, ringtoneUri);
             final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
@@ -117,6 +118,7 @@ public class AlarmFiredActivity extends AppCompatActivity {
     }
 
     private void finishActivity() {
+        mediaPlayer.stop();
         finish();
     }
 }
